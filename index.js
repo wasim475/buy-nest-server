@@ -30,7 +30,7 @@ async function run() {
     app.get('/products', async(req, res) => {
       const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 10;
-      const sortBy = req.query.sortBy || 'createdAt';  // Default sorting by createdAt
+      const sortBy = req.query.sortBy || 'createdAt';  
       const sortOrder = req.query.sortOrder === 'asc' ? 1 : -1;  // Default to descending
   
       const skip = (page - 1) * limit;
