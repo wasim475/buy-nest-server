@@ -27,11 +27,26 @@ async function run() {
     const productsCollection = client.db('productDB').collection('products')
 
 
-    app.get('/products', async(req, res)=>{
-        const cursor = productsCollection.find()
-        const result = await cursor.toArray()
-        res.send(result)
-      })
+    app.get('/products', async(req, res) => {
+      const page = parseInt(req.query.page) || 1;
+      const limit = parseInt(req.query.limit) || 10;
+      const sortBy = req.query.sortBy || 'createdAt';  // Default sorting by createdAt
+      const sortOrder = req.query.sortOrder === 'asc' ? 1 : -1;  // Default to descending
+  
+      const skip = (page - 1) * limit;
+  
+      const cursor = productsCollection.find().sort({ [sortBy]: sortOrder }).skip(skip).limit(limit);
+      const result = await cursor.toArray();
+      const totalProducts = await productsCollection.countDocuments();
+  
+      res.send({
+          totalProducts,
+          page,
+          limit,
+          products: result
+      });
+  });
+  
     // Connect the client to the server	(optional starting in v4.7)
     // await client.connect();
     // Send a ping to confirm a successful connection
