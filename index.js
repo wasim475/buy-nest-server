@@ -13,7 +13,7 @@ app.use(express.json())
 
 const uri = `mongodb+srv://${process.env.buyNowDB}:${process.env.dbPass}@cluster0.uc340vx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -50,8 +50,7 @@ async function run() {
    
     console.log("Pinged Your deployment. You  Successfully Connected to MongoDB!");
   } finally {
-    // Ensures that the client will close when you finish/error
-    // await client.close();
+    
   }
 }
 run().catch(console.dir);
