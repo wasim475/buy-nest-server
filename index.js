@@ -29,7 +29,7 @@ async function run() {
 
     app.get('/products', async(req, res) => {
       const page = parseInt(req.query.page) || 1;
-      const limit = parseInt(req.query.limit) || 10;
+      const limit = parseInt(req.query.limit) || 8;
       const sortBy = req.query.sortBy || 'createdAt';  
       const sortOrder = req.query.sortOrder === 'asc' ? 1 : -1;  
   
@@ -46,6 +46,12 @@ async function run() {
           products: result
       });
   });
+
+  app.get('/productsff',async(req,res)=>{
+      const cursor = productsCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+  })
   
    
     console.log("Pinged Your deployment. You  Successfully Connected to MongoDB!");
